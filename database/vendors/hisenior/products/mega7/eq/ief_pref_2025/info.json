@@ -1,0 +1,52 @@
+{
+  "author": "hangout.audio",
+  "details": "IEF Preference 2025 target - Mega7 Balance",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -1.5,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 21,
+        "gain_db": -0.8,
+        "q": 1.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 56,
+        "gain_db": 1,
+        "q": 1.1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 280,
+        "gain_db": -1.2,
+        "q": 1.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 500,
+        "gain_db": 1,
+        "q": 1.7
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1300,
+        "gain_db": -0.8,
+        "q": 1.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3500,
+        "gain_db": 1.7,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 9500,
+        "gain_db": -2.3,
+        "q": 1.5
+      }
+    ]
+  }
+}
