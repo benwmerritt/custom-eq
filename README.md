@@ -78,7 +78,7 @@ Import one directly:
 python3 convert.py --hangout-url '<full https://graph.hangout.audio/... URL>'
 ```
 
-The importer writes the OPRA JSON under `database/vendors/`, links back to the Hangout URL, and rebuilds `dist/database_v1.jsonl`. For `/iem/` URLs, new products are created as `in_ear`. URL imports do not process `inbox/`; run plain `python3 convert.py` when you want to convert inbox files.
+The importer writes the OPRA JSON under `database/vendors/`, links back to the Hangout URL, and rebuilds `dist/database_v1.jsonl`. For `/iem/` URLs, new products are created as `in_ear`. If a URL import would reuse an existing preset name from a different URL, the importer adds the preamp to the name so both presets are kept. URL imports do not process `inbox/`; run plain `python3 convert.py` when you want to convert inbox files.
 
 ## Roon Setup
 

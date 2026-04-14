@@ -409,6 +409,46 @@ def metadata_for(
     )
 
 
+def avoid_eq_collision(
+    vendor_name: str,
+    product_name: str,
+    eq_name: str,
+    eq_data: dict[str, Any],
+) -> tuple[str, dict[str, Any]]:
+    vendor_slug = slugify(vendor_name)
+    product_slug = slugify(product_name)
+    eq_dir = VENDORS_DIR / vendor_slug / "products" / product_slug / "eq"
+    eq_info = eq_dir / slugify(eq_name) / "info.json"
+
+    if not eq_info.exists():
+        return eq_name, eq_data
+
+    existing = load_json(eq_info)
+    if existing.get("link") == eq_data.get("link"):
+        return eq_name, eq_data
+
+    preamp = str(eq_data["parameters"]["gain_db"])
+    candidate_name = f"{eq_name} preamp {signed_words(preamp)}"
+    candidate_data = {
+        **eq_data,
+        "details": f"{eq_data['details']} - preamp {preamp}",
+    }
+
+    counter = 2
+    while (eq_dir / slugify(candidate_name) / "info.json").exists():
+        candidate_info = eq_dir / slugify(candidate_name) / "info.json"
+        if load_json(candidate_info).get("link") == eq_data.get("link"):
+            return candidate_name, candidate_data
+        candidate_name = f"{eq_name} preamp {signed_words(preamp)} import {counter}"
+        candidate_data = {
+            **eq_data,
+            "details": f"{eq_data['details']} - preamp {preamp} - import {counter}",
+        }
+        counter += 1
+
+    return candidate_name, candidate_data
+
+
 def write_eq(
     vendor_name: str,
     product_name: str,
@@ -448,12 +488,18 @@ def import_hangout_url(url: str) -> None:
         directory.mkdir(parents=True, exist_ok=True)
 
     imported = parse_hangout_url(url)
+    eq_name, eq_data = avoid_eq_collision(
+        imported["vendor_name"],
+        imported["product_name"],
+        imported["eq_name"],
+        imported["eq_data"],
+    )
     path = write_eq(
         imported["vendor_name"],
         imported["product_name"],
         imported["product_subtype"],
-        imported["eq_name"],
-        imported["eq_data"],
+        eq_name,
+        eq_data,
     )
     print(f"Imported Hangout URL -> {path.relative_to(ROOT)}")
 
