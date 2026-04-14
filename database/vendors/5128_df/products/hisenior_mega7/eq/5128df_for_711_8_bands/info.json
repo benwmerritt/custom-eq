@@ -1,0 +1,59 @@
+{
+  "author": "FernandaGunsan",
+  "details": "5128DF for 711 - 8 Bands - Hisenior Mega7",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -3.2,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 29,
+        "gain_db": -3.9,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": 2,
+        "q": 1.3
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1200,
+        "gain_db": -1.5,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3600,
+        "gain_db": 3.3,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7000,
+        "gain_db": 1.4,
+        "q": 1.3
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 8600,
+        "gain_db": -3.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": 4.4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 14000,
+        "gain_db": -9.1,
+        "q": 1.3
+      }
+    ]
+  }
+}

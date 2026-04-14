@@ -1,0 +1,65 @@
+{
+  "author": "FernandaGunsan",
+  "details": "5128 LMG - 9 Bands - Hisenior Mega7",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.4,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 24,
+        "gain_db": -4.2,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 310,
+        "gain_db": -2.9,
+        "q": 0.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1300,
+        "gain_db": -0.6,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3800,
+        "gain_db": 2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5600,
+        "gain_db": 3.6,
+        "q": 0.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 9100,
+        "gain_db": -4.2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": 4.5,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 11000,
+        "gain_db": 2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 14000,
+        "gain_db": -4.2,
+        "q": 2
+      }
+    ]
+  }
+}
