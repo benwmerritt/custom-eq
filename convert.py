@@ -32,6 +32,21 @@ FILTER_TYPES = {
 
 PRODUCT_SUBTYPES = {"over_the_ear", "on_ear", "in_ear", "earbuds"}
 
+KNOWN_PRODUCTS = [
+    {
+        "aliases": ["Apple AirPods Max"],
+        "vendor": "Apple",
+        "product": "AirPods Max",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["Hifiman Arya Organic", "HiFiMAN Arya Organic", "HIFIMAN Arya Organic"],
+        "vendor": "HiFiMAN",
+        "product": "Arya Organic",
+        "subtype": "over_the_ear",
+    },
+]
+
 KNOWN_EQ_METADATA = {
     ("hisenior", "mega7", "5128 df"): {
         "author": "hangout.audio",
@@ -105,7 +120,12 @@ def name_tokens(value: str) -> list[str]:
 
 
 def known_product_prefixes() -> list[tuple[list[str], str, str]]:
-    prefixes: list[tuple[list[str], str, str]] = []
+    prefixes: list[tuple[list[str], str, str]] = [
+        (name_tokens(alias), product["vendor"], product["product"])
+        for product in KNOWN_PRODUCTS
+        for alias in product["aliases"]
+    ]
+
     for vendor_dir in sorted(VENDORS_DIR.iterdir() if VENDORS_DIR.exists() else []):
         vendor_info = vendor_dir / "info.json"
         products_dir = vendor_dir / "products"
@@ -128,6 +148,15 @@ def known_product_prefixes() -> list[tuple[list[str], str, str]]:
             )
 
     return sorted(prefixes, key=lambda item: len(item[0]), reverse=True)
+
+
+def known_product_subtype(vendor_name: str, product_name: str) -> str | None:
+    vendor_slug = slugify(vendor_name)
+    product_slug = slugify(product_name)
+    for product in KNOWN_PRODUCTS:
+        if slugify(product["vendor"]) == vendor_slug and slugify(product["product"]) == product_slug:
+            return product["subtype"]
+    return None
 
 
 def parse_space_filename(path: Path) -> tuple[str, str, str, str]:
@@ -449,13 +478,16 @@ def convert_inbox() -> None:
 
         product_info = product_dir / "info.json"
         if not product_info.exists():
-            require_interactive(source, f"{vendor_name} - {product_name} is a new product")
+            subtype = known_product_subtype(vendor_name, product_name)
+            if subtype is None:
+                require_interactive(source, f"{vendor_name} - {product_name} is a new product")
+                subtype = prompt_subtype(product_name)
             write_json(
                 product_info,
                 {
                     "name": product_name,
                     "type": "headphones",
-                    "subtype": prompt_subtype(product_name),
+                    "subtype": subtype,
                 },
             )
 

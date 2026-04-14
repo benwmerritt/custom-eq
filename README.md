@@ -64,7 +64,7 @@ Examples:
 - `Hisenior Mega7 SuperReview Harman MoA 2025.txt`
 - `Hisenior Mega7 SuperReview Super22.txt`
 
-For this format, `convert.py` first matches known vendor/product names from `database/`, then treats the next word as the author/source and the remaining words as the EQ preset title. If no known product matches, it falls back to `first word = vendor`, `second word = product`, `third word = source`, and the rest as the preset title.
+For this format, `convert.py` first matches known vendor/product names from `database/` and the built-in `KNOWN_PRODUCTS` list, then treats the next word as the author/source and the remaining words as the EQ preset title. If no known product matches, it falls back to `first word = vendor`, `second word = product`, `third word = source`, and the rest as the preset title.
 
 If the format can't be parsed, `convert.py` will ask for the vendor, product, EQ name, author/source, and subtype instead of guessing.
 
