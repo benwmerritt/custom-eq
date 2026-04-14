@@ -1,6 +1,6 @@
 {
   "author": "hangout.audio",
-  "details": "IEF Preference 2025 target - Mega7 Balance",
+  "details": "IEF Preference 2025 target - Mega7 Balance - 7 Bands",
   "type": "parametric_eq",
   "parameters": {
     "gain_db": -1.5,

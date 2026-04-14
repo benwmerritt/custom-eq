@@ -1,6 +1,6 @@
 {
   "author": "Ben Merritt",
-  "details": "5128DF for 711 - 10dB Tilt",
+  "details": "5128DF for 711 - 10dB Tilt - 7 Bands",
   "link": "https://github.com/benwmerritt/custom-eq",
   "type": "parametric_eq",
   "parameters": {
