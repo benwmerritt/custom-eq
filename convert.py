@@ -46,6 +46,12 @@ KNOWN_PRODUCTS = [
         "subtype": "earbuds",
     },
     {
+        "aliases": ["Apple AirPods Pro 2", "Apple AirPods Pro2", "Uploaded Apple AirPods Pro2"],
+        "vendor": "Apple",
+        "product": "AirPods Pro 2",
+        "subtype": "in_ear",
+    },
+    {
         "aliases": ["Hifiman Arya Organic", "HiFiMAN Arya Organic", "HIFIMAN Arya Organic"],
         "vendor": "HiFiMAN",
         "product": "Arya Organic",

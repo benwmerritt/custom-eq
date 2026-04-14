@@ -1,0 +1,65 @@
+{
+  "author": "hangout.audio",
+  "details": "5128 DF 9 Bands - Apple AirPods Pro 2 - B&K 5128 - Diffuse Field Target - bass 0 / tilt 0 / treble 0 / ear 0",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target&bass=0&tilt=0&treble=0&ear=0&P=-4.677154729535584&selphone=Uploaded_Apple_AirPods_Pro2&T1=PK&F1=20&Q1=1.9&G1=-3.6&T2=PK&F2=40&Q2=0.5&G2=-11.1&T3=PK&F3=45&Q3=1.1&G3=1.7&T4=PK&F4=350&Q4=0.5&G4=-3.2&T5=PK&F5=440&Q5=2&G5=-0.9&T6=PK&F6=2700&Q6=2&G6=1.8&T7=PK&F7=4300&Q7=0.8&G7=4.5&T8=PK&F8=6700&Q8=2&G8=-4&T9=PK&F9=14000&Q9=0.5&G9=5.9&T10=PK&F10=0&Q10=0&G10=0",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.677154729535584,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 20,
+        "gain_db": -3.6,
+        "q": 1.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 40,
+        "gain_db": -11.1,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 45,
+        "gain_db": 1.7,
+        "q": 1.1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 350,
+        "gain_db": -3.2,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 440,
+        "gain_db": -0.9,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2700,
+        "gain_db": 1.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 4300,
+        "gain_db": 4.5,
+        "q": 0.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 6700,
+        "gain_db": -4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 14000,
+        "gain_db": 5.9,
+        "q": 0.5
+      }
+    ]
+  }
+}
