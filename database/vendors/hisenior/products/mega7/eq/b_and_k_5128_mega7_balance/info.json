@@ -1,0 +1,59 @@
+{
+  "author": "hangout.audio",
+  "details": "B&K 5128 - Mega7 Balance - Hisenior Mega7 (Balance tips)",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Mega7_Balance&P=-2.2338561983994225&selphone=Hisenior_Mega7_(Balance_tips)&T1=PK&F1=28&Q1=0.5&G1=-9.3&T2=PK&F2=64&Q2=2&G2=-0.8&T3=PK&F3=150&Q3=2&G3=1.1&T4=PK&F4=260&Q4=1.8&G4=-0.9&T5=PK&F5=700&Q5=1.5&G5=1&T6=PK&F6=1300&Q6=1.4&G6=-1.5&T7=PK&F7=2500&Q7=2&G7=-1.1&T8=PK&F8=5100&Q8=1&G8=2.3&T9=PK&F9=0&Q9=0&G9=0&T10=PK&F10=0&Q10=0&G10=0",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -2.2338561983994225,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 28,
+        "gain_db": -9.3,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 64,
+        "gain_db": -0.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 150,
+        "gain_db": 1.1,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 260,
+        "gain_db": -0.9,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 700,
+        "gain_db": 1,
+        "q": 1.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1300,
+        "gain_db": -1.5,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2500,
+        "gain_db": -1.1,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5100,
+        "gain_db": 2.3,
+        "q": 1
+      }
+    ]
+  }
+}
