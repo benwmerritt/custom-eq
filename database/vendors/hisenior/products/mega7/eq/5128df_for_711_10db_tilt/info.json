@@ -1,0 +1,53 @@
+{
+  "author": "Ben Merritt",
+  "details": "5128DF for 711 - 10dB Tilt",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -3,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 26,
+        "gain_db": -4.4,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": 1.9,
+        "q": 1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 270,
+        "gain_db": -0.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1500,
+        "gain_db": -1.9,
+        "q": 0.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3100,
+        "gain_db": 3.4,
+        "q": 0.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3600,
+        "gain_db": 0.5,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 15000,
+        "gain_db": -10.7,
+        "q": 1.4
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -26,6 +27,8 @@ FILTER_TYPES = {
     "HS": "high_shelf",
     "HSC": "high_shelf",
 }
+
+PRODUCT_SUBTYPES = {"over_the_ear", "on_ear", "in_ear", "earbuds"}
 
 KNOWN_EQ_METADATA = {
     ("hisenior", "mega7", "5128 df"): {
@@ -53,14 +56,47 @@ def slugify(value: str) -> str:
     return value.strip("_") or "custom"
 
 
+def require_interactive(path: Path, reason: str) -> None:
+    if not sys.stdin.isatty():
+        raise ValueError(
+            f"{path.name}: {reason}. Rename it as 'Vendor - Product - EQ Name.txt' "
+            "or run convert.py in an interactive terminal."
+        )
+
+
+def prompt_text(label: str, default: str | None = None) -> str:
+    suffix = f" [{default}]" if default else ""
+    while True:
+        value = input(f"{label}{suffix}: ").strip()
+        if value:
+            return value
+        if default:
+            return default
+        print(f"{label} is required.")
+
+
+def prompt_subtype(product_name: str) -> str:
+    options = ", ".join(sorted(PRODUCT_SUBTYPES))
+    while True:
+        subtype = input(f"Subtype for {product_name} ({options}): ").strip()
+        if subtype in PRODUCT_SUBTYPES:
+            return subtype
+        print(f"Subtype must be one of: {options}")
+
+
 def parse_filename(path: Path) -> tuple[str, str, str]:
     parts = [part.strip() for part in path.stem.split(" - ") if part.strip()]
 
     if len(parts) >= 3:
         return parts[0], parts[1], " - ".join(parts[2:])
-    if len(parts) == 2:
-        return parts[0], parts[1], "custom"
-    return "custom", path.stem, "custom"
+
+    require_interactive(path, "filename does not match the expected convention")
+    print(f"\n{path.name} is not named as 'Vendor - Product - EQ Name.txt'.")
+    return (
+        prompt_text("Vendor"),
+        prompt_text("Product"),
+        prompt_text("EQ name", path.stem),
+    )
 
 
 def number(value: float) -> int | float:
@@ -156,12 +192,13 @@ def convert_inbox() -> None:
 
         product_info = product_dir / "info.json"
         if not product_info.exists():
+            require_interactive(source, f"{vendor_name} - {product_name} is a new product")
             write_json(
                 product_info,
                 {
                     "name": product_name,
                     "type": "headphones",
-                    "subtype": "over_the_ear",
+                    "subtype": prompt_subtype(product_name),
                 },
             )
 

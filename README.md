@@ -11,6 +11,7 @@ cp "HiFiMAN - Arya Organic - Ben Relaxed.txt" inbox/
 
 # 2. Run the converter
 python3 convert.py
+#    If this is a new product, choose the correct subtype when prompted.
 
 # 3. Commit and push
 git add -A && git commit -m "Add new EQ presets" && git push
@@ -36,6 +37,7 @@ custom-eq/
                 info.json    # The actual EQ preset
   dist/
     database_v1.jsonl        # Auto-generated -- what Roon reads
+  targets/                   # Local copies of AutoEq target curves
   convert.py                 # The conversion script
 ```
 
@@ -52,7 +54,7 @@ Examples:
 - `Hisenior - Mega7 - 5128 DF.txt`
 - `Sennheiser - HD650 - Oratory Harman.txt`
 
-If a file only has two parts (`Vendor - Product.txt`), the EQ name defaults to "custom". If the format can't be parsed at all, it falls back to `custom/filename/custom`.
+If the format can't be parsed, `convert.py` will ask for the vendor, product, EQ name, and subtype instead of guessing.
 
 ## Roon Setup
 
@@ -132,6 +134,50 @@ Example `database/vendors/hifiman/products/arya_organic/eq/ben_relaxed/info.json
 
 ---
 
+## AutoEq Workflow
+
+The local AutoEq clone is expected at:
+
+```bash
+/Users/benjaminmerritt/dev/src/AutoEq
+```
+
+Set up AutoEq from this repo using a local virtualenv:
+
+```bash
+python3.11 -m venv .venv
+. .venv/bin/activate
+python -m pip install -U pip
+python -m pip install -U -e /Users/benjaminmerritt/dev/src/AutoEq
+python -m autoeq --help
+```
+
+Run AutoEq manually with a measurement CSV and one of the copied target curves:
+
+```bash
+. .venv/bin/activate
+python -m autoeq \
+  --input-file="/Users/benjaminmerritt/dev/src/AutoEq/measurements/oratory1990/data/over-ear/HIFIMAN Arya Organic.csv" \
+  --output-dir=".autoeq-output" \
+  --target="targets/Harman over-ear 2018.csv" \
+  --parametric-eq \
+  --parametric-eq-config=4_PEAKING_WITH_LOW_SHELF,4_PEAKING_WITH_HIGH_SHELF \
+  --max-gain=12 \
+  --thread-count=1
+```
+
+Then copy the generated `ParametricEQ.txt` file into `inbox/` with the OPRA naming convention:
+
+```bash
+cp ".autoeq-output/HIFIMAN Arya Organic/HIFIMAN Arya Organic ParametricEQ.txt" \
+  "inbox/HiFiMAN - Arya Organic - Harman over-ear 2018.txt"
+python3 convert.py
+```
+
+Only the Roon-ready OPRA source files and `dist/database_v1.jsonl` are meant to be committed. `.autoeq-output/` and `.venv/` are local scratch directories.
+
+---
+
 ## Squig.link / Hangout.audio Target Curves
 
 Separate from Roon, these tools are useful for generating EQ presets via AutoEQ.
@@ -185,6 +231,7 @@ Measurements from different rigs (oratory1990's GRAS vs Super* Review's coupler)
 ## Dependencies
 
 - Python 3.10+ (no external packages needed)
+- Python 3.11 for the optional local AutoEq `.venv`
 - Git
 
 ## Workflow Summary
