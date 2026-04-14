@@ -100,18 +100,87 @@ def prompt_subtype(product_name: str) -> str:
         print(f"Subtype must be one of: {options}")
 
 
-def parse_filename(path: Path) -> tuple[str, str, str]:
-    parts = [part.strip() for part in path.stem.split(" - ") if part.strip()]
+def name_tokens(value: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", value.lower())
 
-    if len(parts) >= 3:
-        return parts[0], parts[1], " - ".join(parts[2:])
 
-    require_interactive(path, "filename does not match the expected convention")
-    print(f"\n{path.name} is not named as 'Vendor - Product - EQ Name.txt'.")
+def known_product_prefixes() -> list[tuple[list[str], str, str]]:
+    prefixes: list[tuple[list[str], str, str]] = []
+    for vendor_dir in sorted(VENDORS_DIR.iterdir() if VENDORS_DIR.exists() else []):
+        vendor_info = vendor_dir / "info.json"
+        products_dir = vendor_dir / "products"
+        if not vendor_info.exists() or not products_dir.exists():
+            continue
+
+        vendor_name = load_json(vendor_info)["name"]
+        for product_dir in sorted(products_dir.iterdir()):
+            product_info = product_dir / "info.json"
+            if not product_info.exists():
+                continue
+
+            product_name = load_json(product_info)["name"]
+            prefixes.append(
+                (
+                    name_tokens(f"{vendor_name} {product_name}"),
+                    vendor_name,
+                    product_name,
+                )
+            )
+
+    return sorted(prefixes, key=lambda item: len(item[0]), reverse=True)
+
+
+def parse_space_filename(path: Path) -> tuple[str, str, str, str]:
+    words = path.stem.split()
+    normalized = name_tokens(path.stem)
+
+    for prefix, vendor_name, product_name in known_product_prefixes():
+        if normalized[: len(prefix)] != prefix or len(words) <= len(prefix) + 1:
+            continue
+
+        return (
+            vendor_name,
+            product_name,
+            " ".join(words[len(prefix) + 1 :]),
+            words[len(prefix)],
+        )
+
+    if len(words) >= 4:
+        return words[0], words[1], " ".join(words[3:]), words[2]
+
+    require_interactive(path, "filename does not match a supported convention")
+    print(
+        f"\n{path.name} is not named as 'Vendor - Product - EQ Name.txt' "
+        "or 'Vendor Product Source EQ Name.txt'."
+    )
     return (
         prompt_text("Vendor"),
         prompt_text("Product"),
         prompt_text("EQ name", path.stem),
+        prompt_text("Author/source", "Ben Merritt"),
+    )
+
+
+def parse_filename(path: Path) -> tuple[str, str, str, str | None]:
+    parts = [part.strip() for part in path.stem.split(" - ") if part.strip()]
+
+    if len(parts) >= 3:
+        return parts[0], parts[1], " - ".join(parts[2:]), None
+
+    words = path.stem.split()
+    if len(words) >= 4:
+        return parse_space_filename(path)
+
+    require_interactive(path, "filename does not match a supported convention")
+    print(
+        f"\n{path.name} is not named as 'Vendor - Product - EQ Name.txt' "
+        "or 'Vendor Product Source EQ Name.txt'."
+    )
+    return (
+        prompt_text("Vendor"),
+        prompt_text("Product"),
+        prompt_text("EQ name", path.stem),
+        prompt_text("Author/source", "Ben Merritt"),
     )
 
 
@@ -294,12 +363,17 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def metadata_for(vendor_slug: str, product_slug: str, eq_name: str) -> dict[str, Any]:
+def metadata_for(
+    vendor_slug: str,
+    product_slug: str,
+    eq_name: str,
+    author: str | None = None,
+) -> dict[str, Any]:
     key = (vendor_slug, product_slug, eq_name.lower())
     return KNOWN_EQ_METADATA.get(
         key,
         {
-            "author": "Ben Merritt",
+            "author": author or "Ben Merritt",
             "details": eq_name,
             "link": REPO_URL,
         },
@@ -360,7 +434,7 @@ def convert_inbox() -> None:
         directory.mkdir(parents=True, exist_ok=True)
 
     for source in sorted(INBOX_DIR.glob("*.txt")):
-        vendor_name, product_name, eq_name = parse_filename(source)
+        vendor_name, product_name, eq_name, author = parse_filename(source)
         vendor_slug = slugify(vendor_name)
         product_slug = slugify(product_name)
         eq_slug = slugify(eq_name)
@@ -385,7 +459,7 @@ def convert_inbox() -> None:
                 },
             )
 
-        eq_data = metadata_for(vendor_slug, product_slug, eq_name)
+        eq_data = metadata_for(vendor_slug, product_slug, eq_name, author)
         eq_data = {
             **eq_data,
             "type": "parametric_eq",

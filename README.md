@@ -43,7 +43,7 @@ custom-eq/
 
 ## File Naming Convention
 
-Files in `inbox/` must be named:
+Files in `inbox/` can use the original dash-separated format:
 
 ```
 Vendor - Product - EQ Name.txt
@@ -54,7 +54,19 @@ Examples:
 - `Hisenior - Mega7 - 5128 DF.txt`
 - `Sennheiser - HD650 - Oratory Harman.txt`
 
-If the format can't be parsed, `convert.py` will ask for the vendor, product, EQ name, and subtype instead of guessing.
+You can also use the space-separated source format:
+
+```
+Vendor Product Source EQ Name.txt
+```
+
+Examples:
+- `Hisenior Mega7 SuperReview Harman MoA 2025.txt`
+- `Hisenior Mega7 SuperReview Super22.txt`
+
+For this format, `convert.py` first matches known vendor/product names from `database/`, then treats the next word as the author/source and the remaining words as the EQ preset title. If no known product matches, it falls back to `first word = vendor`, `second word = product`, `third word = source`, and the rest as the preset title.
+
+If the format can't be parsed, `convert.py` will ask for the vendor, product, EQ name, author/source, and subtype instead of guessing.
 
 ## Hangout.audio URL Import
 
