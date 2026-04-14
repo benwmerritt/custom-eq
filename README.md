@@ -61,10 +61,13 @@ In Roon:
 1. Open **MUSE** (the DSP/audio controls)
 2. Go to **Headphone EQ**
 3. Find the **Custom Repository** field
-4. Enter this repo URL: `https://github.com/benwmerritt/custom-eq`
+4. Enter the raw dist URL: `https://raw.githubusercontent.com/benwmerritt/custom-eq/main/dist/`
+
+If Roon expects a direct database file URL instead of a repository/base URL, use:
+`https://raw.githubusercontent.com/benwmerritt/custom-eq/main/dist/database_v1.jsonl`
 5. Your custom presets will appear alongside OPRA entries
 
-Roon reads `dist/database_v1.jsonl` from the repo. The convert script generates this file automatically from whatever is in `database/`.
+Roon reads `database_v1.jsonl` from the URL you give it. On GitHub, the Roon-consumable file is exposed through the raw URL above, not the normal `https://github.com/...` repository page.
 
 ## How It Works
 
