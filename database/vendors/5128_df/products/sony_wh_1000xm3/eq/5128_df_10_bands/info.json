@@ -1,0 +1,71 @@
+{
+  "author": "hangout.audio",
+  "details": "5128 DF 10 Bands - Sony WH-1000XM3 - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=0.0001728531438658365&selphone=Uploaded_Sony_WH-1000XM3&T1=PK&F1=25&Q1=0.5&G1=-11.7&T2=PK&F2=120&Q2=0.5&G2=-10.9&T3=PK&F3=230&Q3=0.8&G3=1.7&T4=PK&F4=560&Q4=1.8&G4=-2.6&T5=PK&F5=1100&Q5=2&G5=3.5&T6=PK&F6=2400&Q6=2&G6=-1.4&T7=PK&F7=4200&Q7=1.4&G7=6.6&T8=PK&F8=9000&Q8=1.8&G8=-9.2&T9=PK&F9=13000&Q9=0.5&G9=10.8&T10=PK&F10=13000&Q10=1&G10=5.8",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": 0.0001728531438658365,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 25,
+        "gain_db": -11.7,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 120,
+        "gain_db": -10.9,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 230,
+        "gain_db": 1.7,
+        "q": 0.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 560,
+        "gain_db": -2.6,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1100,
+        "gain_db": 3.5,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2400,
+        "gain_db": -1.4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 4200,
+        "gain_db": 6.6,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 9000,
+        "gain_db": -9.2,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 13000,
+        "gain_db": 10.8,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 13000,
+        "gain_db": 5.8,
+        "q": 1
+      }
+    ]
+  }
+}

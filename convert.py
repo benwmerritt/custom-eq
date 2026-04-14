@@ -40,9 +40,51 @@ KNOWN_PRODUCTS = [
         "subtype": "over_the_ear",
     },
     {
+        "aliases": ["Apple AirPods 2", "Uploaded Apple AirPods 2"],
+        "vendor": "Apple",
+        "product": "AirPods 2",
+        "subtype": "earbuds",
+    },
+    {
         "aliases": ["Hifiman Arya Organic", "HiFiMAN Arya Organic", "HIFIMAN Arya Organic"],
         "vendor": "HiFiMAN",
         "product": "Arya Organic",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["HIFIMAN Sundara", "Uploaded HIFIMAN Sundara"],
+        "vendor": "HiFiMAN",
+        "product": "Sundara",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["Hisenior Mega7"],
+        "vendor": "Hisenior",
+        "product": "Mega7",
+        "subtype": "in_ear",
+    },
+    {
+        "aliases": ["Sennheiser HD 560S", "Uploaded Sennheiser HD 560S"],
+        "vendor": "Sennheiser",
+        "product": "HD 560S",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["Sony WH-1000XM3", "Uploaded Sony WH-1000XM3"],
+        "vendor": "Sony",
+        "product": "WH-1000XM3",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["Sony WH-1000XM4", "Uploaded Sony WH-1000XM4"],
+        "vendor": "Sony",
+        "product": "WH-1000XM4",
+        "subtype": "over_the_ear",
+    },
+    {
+        "aliases": ["Sony WH-1000XM5", "Uploaded Sony WH-1000XM5"],
+        "vendor": "Sony",
+        "product": "WH-1000XM5",
         "subtype": "over_the_ear",
     },
 ]
@@ -157,6 +199,20 @@ def known_product_subtype(vendor_name: str, product_name: str) -> str | None:
         if slugify(product["vendor"]) == vendor_slug and slugify(product["product"]) == product_slug:
             return product["subtype"]
     return None
+
+
+def product_subtype_for(vendor_name: str, product_name: str, default: str) -> str:
+    product_info = (
+        VENDORS_DIR
+        / slugify(vendor_name)
+        / "products"
+        / slugify(product_name)
+        / "info.json"
+    )
+    if product_info.exists():
+        return load_json(product_info).get("subtype", default)
+
+    return known_product_subtype(vendor_name, product_name) or default
 
 
 def parse_space_filename(path: Path) -> tuple[str, str, str, str]:
@@ -274,8 +330,16 @@ def parse_hangout_product(raw_name: str) -> tuple[str, str]:
     name = re.sub(r"\s*\([^)]*\)\s*$", "", name).strip()
     parts = name.split()
 
+    if parts and parts[0].lower() == "uploaded":
+        parts = parts[1:]
+
     if len(parts) < 2:
         raise ValueError(f"Could not infer vendor and product from selphone={raw_name!r}")
+
+    normalized = name_tokens(" ".join(parts))
+    for prefix, vendor_name, product_name in known_product_prefixes():
+        if normalized[: len(prefix)] == prefix:
+            return vendor_name, product_name
 
     return parts[0], " ".join(parts[1:])
 
@@ -369,10 +433,12 @@ def parse_hangout_url(url: str) -> dict[str, Any]:
 
     vendor_name, product_name = parse_hangout_product(raw_product)
 
+    subtype = product_subtype_for(vendor_name, product_name, hangout_subtype(parsed.path))
+
     return {
         "vendor_name": vendor_name,
         "product_name": product_name,
-        "product_subtype": hangout_subtype(parsed.path),
+        "product_subtype": subtype,
         "eq_name": eq_name,
         "eq_data": {
             "author": "hangout.audio",
