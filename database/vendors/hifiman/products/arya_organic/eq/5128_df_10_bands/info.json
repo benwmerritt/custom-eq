@@ -1,0 +1,71 @@
+{
+  "author": "hangout.audio",
+  "details": "Hangout - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0 - 10 Bands",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=-8.147219702352405&selphone=Uploaded_HIFIMAN_Arya_Organic&T1=PK&F1=21&Q1=1.2&G1=-2.4&T2=PK&F2=54&Q2=1.6&G2=1.4&T3=PK&F3=60&Q3=0.5&G3=-6.6&T4=PK&F4=130&Q4=2&G4=-1.5&T5=PK&F5=400&Q5=1&G5=-2.2&T6=PK&F6=1900&Q6=1.8&G6=4.3&T7=PK&F7=7000&Q7=1.4&G7=-2.9&T8=PK&F8=9500&Q8=2&G8=10.1&T9=PK&F9=12000&Q9=2&G9=-10.8&T10=PK&F10=13000&Q10=0.8&G10=5.3",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -8.147219702352405,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 21,
+        "gain_db": -2.4,
+        "q": 1.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 54,
+        "gain_db": 1.4,
+        "q": 1.6
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 60,
+        "gain_db": -6.6,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": -1.5,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 400,
+        "gain_db": -2.2,
+        "q": 1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1900,
+        "gain_db": 4.3,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7000,
+        "gain_db": -2.9,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 9500,
+        "gain_db": 10.1,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 12000,
+        "gain_db": -10.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 13000,
+        "gain_db": 5.3,
+        "q": 0.8
+      }
+    ]
+  }
+}

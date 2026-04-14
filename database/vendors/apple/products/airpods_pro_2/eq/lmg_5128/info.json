@@ -1,0 +1,71 @@
+{
+  "author": "Archive",
+  "details": "Archive - LMG 5128 - 10 Bands",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.8,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 20,
+        "gain_db": -2.4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 38,
+        "gain_db": -7.2,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 280,
+        "gain_db": -1.5,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 450,
+        "gain_db": -1.3,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3700,
+        "gain_db": 3.5,
+        "q": 0.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5200,
+        "gain_db": 2.1,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 6700,
+        "gain_db": -4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": 3.6,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 12000,
+        "gain_db": -4.5,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 15000,
+        "gain_db": 5.4,
+        "q": 0.6
+      }
+    ]
+  }
+}

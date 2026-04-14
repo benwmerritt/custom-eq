@@ -1,0 +1,29 @@
+{
+  "author": "Listner",
+  "details": "Listner - 5128 DF - 3 Bands",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": 0,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 23,
+        "gain_db": -14.9,
+        "q": 0.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 120,
+        "gain_db": 1.5,
+        "q": 1.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 430,
+        "gain_db": -2.3,
+        "q": 0.8
+      }
+    ]
+  }
+}

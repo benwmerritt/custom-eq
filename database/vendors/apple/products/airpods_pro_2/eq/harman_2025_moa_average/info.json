@@ -1,0 +1,65 @@
+{
+  "author": "Archive",
+  "details": "Archive - Harman 2025 MoA Average - 9 Bands",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.7,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 33,
+        "gain_db": -4.9,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 450,
+        "gain_db": -2.3,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1900,
+        "gain_db": -0.7,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2600,
+        "gain_db": 2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3900,
+        "gain_db": 4.2,
+        "q": 0.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 6800,
+        "gain_db": -3.6,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": 2.6,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 12000,
+        "gain_db": -3.7,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 14000,
+        "gain_db": 4.8,
+        "q": 0.6
+      }
+    ]
+  }
+}

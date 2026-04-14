@@ -135,6 +135,29 @@ def signed_words(value: str) -> str:
     return value
 
 
+def ensure_band_count(details: str, band_count: int) -> str:
+    if re.search(r"\b\d+\s+bands?\b", details, re.I):
+        return details
+    return f"{details} - {band_count} Bands"
+
+
+def source_label(author: str) -> str:
+    if slugify(author) in {"hangout_audio", "hangoutaudio"}:
+        return "Hangout"
+    return author
+
+
+def ensure_source_prefix(details: str, author: str | None) -> str:
+    if not author:
+        return details
+
+    label = source_label(author)
+    if details.lower().startswith(f"{label.lower()} - ") or details.lower().startswith(f"{author.lower()} - "):
+        return details
+
+    return f"{label} - {details}"
+
+
 def require_interactive(path: Path, reason: str) -> None:
     if not sys.stdin.isatty():
         raise ValueError(
@@ -436,6 +459,7 @@ def parse_hangout_url(url: str) -> dict[str, Any]:
     details = f"{rig_label} - {target_name} - {source_name}"
     if settings:
         details += " - " + " / ".join(f"{key} {value}" for key, value in settings)
+    details = ensure_band_count(details, len(bands))
 
     vendor_name, product_name = parse_hangout_product(raw_product)
 
@@ -496,11 +520,16 @@ def avoid_eq_collision(
         return eq_name, eq_data
 
     existing = load_json(eq_info)
-    if existing.get("link") == eq_data.get("link"):
+    if (
+        existing.get("author") == eq_data.get("author")
+        and existing.get("details") == eq_data.get("details")
+        and existing.get("parameters") == eq_data.get("parameters")
+    ):
         return eq_name, eq_data
 
     preamp = str(eq_data["parameters"]["gain_db"])
-    candidate_name = f"{eq_name} preamp {signed_words(preamp)}"
+    author = str(eq_data.get("author") or "import")
+    candidate_name = f"{eq_name} {author} preamp {signed_words(preamp)}"
     candidate_data = {
         **eq_data,
         "details": f"{eq_data['details']} - preamp {preamp}",
@@ -509,9 +538,14 @@ def avoid_eq_collision(
     counter = 2
     while (eq_dir / slugify(candidate_name) / "info.json").exists():
         candidate_info = eq_dir / slugify(candidate_name) / "info.json"
-        if load_json(candidate_info).get("link") == eq_data.get("link"):
+        existing = load_json(candidate_info)
+        if (
+            existing.get("author") == eq_data.get("author")
+            and existing.get("details") == eq_data.get("details")
+            and existing.get("parameters") == eq_data.get("parameters")
+        ):
             return candidate_name, candidate_data
-        candidate_name = f"{eq_name} preamp {signed_words(preamp)} import {counter}"
+        candidate_name = f"{eq_name} {author} preamp {signed_words(preamp)} import {counter}"
         candidate_data = {
             **eq_data,
             "details": f"{eq_data['details']} - preamp {preamp} - import {counter}",
@@ -584,11 +618,9 @@ def convert_inbox() -> None:
         vendor_name, product_name, eq_name, author = parse_filename(source)
         vendor_slug = slugify(vendor_name)
         product_slug = slugify(product_name)
-        eq_slug = slugify(eq_name)
 
         vendor_dir = VENDORS_DIR / vendor_slug
         product_dir = vendor_dir / "products" / product_slug
-        eq_dir = product_dir / "eq" / eq_slug
 
         vendor_info = vendor_dir / "info.json"
         if not vendor_info.exists():
@@ -608,20 +640,28 @@ def convert_inbox() -> None:
                     "subtype": subtype,
                 },
             )
+        else:
+            subtype = load_json(product_info).get("subtype", "over_the_ear")
 
+        parameters = parse_eq_file(source)
         eq_data = metadata_for(vendor_slug, product_slug, eq_name, author)
+        eq_data["details"] = ensure_band_count(
+            ensure_source_prefix(eq_data["details"], author),
+            len(parameters["bands"]),
+        )
         eq_data = {
             **eq_data,
             "type": "parametric_eq",
-            "parameters": parse_eq_file(source),
+            "parameters": parameters,
         }
-        write_json(eq_dir / "info.json", eq_data)
+        eq_name, eq_data = avoid_eq_collision(vendor_name, product_name, eq_name, eq_data)
+        path = write_eq(vendor_name, product_name, subtype, eq_name, eq_data)
 
         destination = PROCESSED_DIR / source.name
         if destination.exists():
             destination.unlink()
         shutil.move(str(source), destination)
-        print(f"Converted {source.relative_to(ROOT)} -> {eq_dir.relative_to(ROOT) / 'info.json'}")
+        print(f"Converted {source.relative_to(ROOT)} -> {path.relative_to(ROOT)}")
 
 
 def load_json(path: Path) -> dict[str, Any]:

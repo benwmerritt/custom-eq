@@ -1,0 +1,71 @@
+{
+  "author": "hangout.audio",
+  "details": "Hangout - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0 - 10 Bands",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=-3.1372772541316367&selphone=Uploaded_Sennheiser_HD_560S&T1=PK&F1=52&Q1=0.5&G1=-4.9&T2=PK&F2=130&Q2=2&G2=-0.7&T3=PK&F3=250&Q3=0.5&G3=-1.9&T4=PK&F4=1200&Q4=1.8&G4=-1.7&T5=PK&F5=2900&Q5=1.8&G5=2.6&T6=PK&F6=5200&Q6=1.6&G6=-1.5&T7=PK&F7=7000&Q7=2&G7=1.8&T8=PK&F8=10000&Q8=2&G8=1.9&T9=PK&F9=11000&Q9=1.4&G9=11.6&T10=PK&F10=13000&Q10=2&G10=-2.9",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -3.1372772541316367,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 52,
+        "gain_db": -4.9,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": -0.7,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 250,
+        "gain_db": -1.9,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1200,
+        "gain_db": -1.7,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2900,
+        "gain_db": 2.6,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5200,
+        "gain_db": -1.5,
+        "q": 1.6
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7000,
+        "gain_db": 1.8,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": 1.9,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 11000,
+        "gain_db": 11.6,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 13000,
+        "gain_db": -2.9,
+        "q": 2
+      }
+    ]
+  }
+}

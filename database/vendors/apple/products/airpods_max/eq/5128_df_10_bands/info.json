@@ -1,0 +1,71 @@
+{
+  "author": "hangout.audio",
+  "details": "Hangout - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0 - 10 Bands",
+  "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=-8.147219702352405&selphone=Uploaded_Apple_AirPods_Max&T1=PK&F1=21&Q1=1.4&G1=-6.5&T2=PK&F2=46&Q2=0.5&G2=-12&T3=PK&F3=49&Q3=1.2&G3=2.6&T4=PK&F4=350&Q4=0.5&G4=-3.3&T5=PK&F5=3000&Q5=1.7&G5=2.6&T6=PK&F6=5300&Q6=2&G6=-4&T7=PK&F7=7100&Q7=2&G7=2.7&T8=PK&F8=7400&Q8=0.5&G8=7.6&T9=PK&F9=13000&Q9=2&G9=-7.2&T10=PK&F10=15000&Q10=0.6&G10=3.5",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -8.147219702352405,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 21,
+        "gain_db": -6.5,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 46,
+        "gain_db": -12,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 49,
+        "gain_db": 2.6,
+        "q": 1.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 350,
+        "gain_db": -3.3,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3000,
+        "gain_db": 2.6,
+        "q": 1.7
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5300,
+        "gain_db": -4,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7100,
+        "gain_db": 2.7,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7400,
+        "gain_db": 7.6,
+        "q": 0.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 13000,
+        "gain_db": -7.2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 15000,
+        "gain_db": 3.5,
+        "q": 0.6
+      }
+    ]
+  }
+}
