@@ -1,0 +1,71 @@
+{
+  "author": "kr0mka",
+  "details": "Using oratory1990 csv Harman OE 201810 Band",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.7,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 20,
+        "gain_db": 0.9,
+        "q": 4.1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 32,
+        "gain_db": 3.6,
+        "q": 0.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": -2.8,
+        "q": 1.1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 200,
+        "gain_db": 1.1,
+        "q": 2.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 370,
+        "gain_db": -0.8,
+        "q": 1.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1800,
+        "gain_db": 4.6,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2100,
+        "gain_db": 1,
+        "q": 4.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2900,
+        "gain_db": -2.4,
+        "q": 3.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 4700,
+        "gain_db": -2.9,
+        "q": 3.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5400,
+        "gain_db": 3.5,
+        "q": 4.9
+      }
+    ]
+  }
+}

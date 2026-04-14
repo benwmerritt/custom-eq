@@ -1,0 +1,71 @@
+{
+  "author": "kr0mka",
+  "details": "Using oratory1990 csv KB501X DF + Harman 2018 OF Filters 10 Band",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -4.2,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 24,
+        "gain_db": 3.4,
+        "q": 0.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 130,
+        "gain_db": -2,
+        "q": 1.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 210,
+        "gain_db": 0.9,
+        "q": 3.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 350,
+        "gain_db": -0.9,
+        "q": 1.6
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1100,
+        "gain_db": -1.6,
+        "q": 4.7
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1800,
+        "gain_db": 5.4,
+        "q": 1.3
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3800,
+        "gain_db": 3.2,
+        "q": 3.3
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5500,
+        "gain_db": 8,
+        "q": 4.7
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5900,
+        "gain_db": -2.4,
+        "q": 1.1
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 5900,
+        "gain_db": -4.8,
+        "q": 0.6
+      }
+    ]
+  }
+}

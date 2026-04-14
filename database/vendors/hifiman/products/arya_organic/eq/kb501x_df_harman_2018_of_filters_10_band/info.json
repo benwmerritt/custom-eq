@@ -1,0 +1,71 @@
+{
+  "author": "kr0mka",
+  "details": "KB501X DF + Harman 2018 OF Filters 10 Band",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -5.8,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 30,
+        "gain_db": 3.2,
+        "q": 0.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 140,
+        "gain_db": -2,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 210,
+        "gain_db": 1.8,
+        "q": 3.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 870,
+        "gain_db": 1.5,
+        "q": 3
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1000,
+        "gain_db": -2.3,
+        "q": 2.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1700,
+        "gain_db": 5.8,
+        "q": 1.5
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2200,
+        "gain_db": 1.5,
+        "q": 4.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 2900,
+        "gain_db": -2.3,
+        "q": 4.2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3600,
+        "gain_db": 1.2,
+        "q": 4.9
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 4700,
+        "gain_db": -2.9,
+        "q": 4
+      }
+    ]
+  }
+}
