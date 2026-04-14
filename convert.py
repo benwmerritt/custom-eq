@@ -7,8 +7,10 @@ import json
 import re
 import shutil
 import sys
+from argparse import ArgumentParser
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlparse
 
 
 ROOT = Path(__file__).resolve().parent
@@ -54,6 +56,20 @@ def slugify(value: str) -> str:
     value = value.replace("&", " and ")
     value = re.sub(r"[^a-z0-9]+", "_", value)
     return value.strip("_") or "custom"
+
+
+def display_name(value: str) -> str:
+    value = value.replace("_", " ").strip()
+    return re.sub(r"\s+", " ", value)
+
+
+def signed_words(value: str) -> str:
+    value = value.strip()
+    if value.startswith("-"):
+        return f"minus {value[1:]}"
+    if value.startswith("+"):
+        return f"plus {value[1:]}"
+    return value
 
 
 def require_interactive(path: Path, reason: str) -> None:
@@ -155,6 +171,124 @@ def parse_eq_file(path: Path) -> dict[str, Any]:
     return {"gain_db": number(preamp), "bands": bands}
 
 
+def parse_hangout_product(raw_name: str) -> tuple[str, str]:
+    name = display_name(raw_name)
+    name = re.sub(r"\s*\([^)]*\)\s*$", "", name).strip()
+    parts = name.split()
+
+    if len(parts) < 2:
+        raise ValueError(f"Could not infer vendor and product from selphone={raw_name!r}")
+
+    return parts[0], " ".join(parts[1:])
+
+
+def hangout_subtype(path: str) -> str:
+    path_parts = {part.lower() for part in path.split("/") if part}
+    if "iem" in path_parts:
+        return "in_ear"
+    if "earbud" in path_parts or "earbuds" in path_parts:
+        return "earbuds"
+    return "over_the_ear"
+
+
+def hangout_rig_label(path: str) -> str:
+    path_parts = [part for part in path.split("/") if part]
+    if "5128" in path_parts:
+        return "B&K 5128"
+    for part in path_parts:
+        if part.isdigit():
+            return part
+    return "Hangout"
+
+
+def first_query_value(query: dict[str, list[str]], key: str) -> str | None:
+    values = query.get(key)
+    return values[0] if values else None
+
+
+def parse_hangout_url(url: str) -> dict[str, Any]:
+    parsed = urlparse(url)
+    query = parse_qs(parsed.query, keep_blank_values=True)
+
+    raw_product = first_query_value(query, "selphone")
+    if raw_product is None:
+        raise ValueError("Hangout URL is missing selphone=<product>")
+
+    preamp = first_query_value(query, "P")
+    share = first_query_value(query, "share") or ""
+    share_parts = [display_name(part) for part in share.split(",") if part]
+    target_name = share_parts[0] if share_parts else "Custom Target"
+    source_name = share_parts[1] if len(share_parts) > 1 else display_name(raw_product)
+    rig_label = hangout_rig_label(parsed.path)
+
+    settings = [
+        (key, first_query_value(query, key))
+        for key in ("bass", "tilt", "treble", "ear")
+        if first_query_value(query, key) is not None
+    ]
+
+    bands: list[dict[str, Any]] = []
+    for index in range(1, 65):
+        filter_type = first_query_value(query, f"T{index}")
+        frequency = first_query_value(query, f"F{index}")
+        q = first_query_value(query, f"Q{index}")
+        gain = first_query_value(query, f"G{index}")
+
+        if filter_type is None and frequency is None and q is None and gain is None:
+            continue
+        if filter_type is None or frequency is None or q is None or gain is None:
+            raise ValueError(f"Hangout URL has incomplete filter {index}")
+
+        frequency_value = float(frequency)
+        q_value = float(q)
+        gain_value = float(gain)
+        if frequency_value == 0 and q_value == 0 and gain_value == 0:
+            continue
+
+        opra_type = FILTER_TYPES.get(filter_type.upper())
+        if opra_type is None:
+            print(f"WARNING: skipped unsupported Hangout filter type {filter_type} at T{index}")
+            continue
+
+        bands.append(
+            {
+                "type": opra_type,
+                "frequency": number(frequency_value),
+                "gain_db": number(gain_value),
+                "q": number(q_value),
+            }
+        )
+
+    if not bands:
+        raise ValueError("Hangout URL did not contain any supported EQ bands")
+
+    target_for_name = re.sub(r"\s+Target$", "", target_name, flags=re.I)
+    setting_name = " ".join(f"{key} {signed_words(value)}" for key, value in settings)
+    eq_name = " ".join(part for part in (rig_label, target_for_name, setting_name) if part)
+    details = f"{rig_label} - {target_name} - {source_name}"
+    if settings:
+        details += " - " + " / ".join(f"{key} {value}" for key, value in settings)
+
+    vendor_name, product_name = parse_hangout_product(raw_product)
+
+    return {
+        "vendor_name": vendor_name,
+        "product_name": product_name,
+        "product_subtype": hangout_subtype(parsed.path),
+        "eq_name": eq_name,
+        "eq_data": {
+            "author": "hangout.audio",
+            "details": details,
+            "link": url,
+            "type": "parametric_eq",
+            "parameters": {
+                "gain_db": number(float(preamp)) if preamp is not None else 0,
+                "bands": bands,
+            },
+        },
+    }
+
+
 def write_json(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -170,6 +304,55 @@ def metadata_for(vendor_slug: str, product_slug: str, eq_name: str) -> dict[str,
             "link": REPO_URL,
         },
     )
+
+
+def write_eq(
+    vendor_name: str,
+    product_name: str,
+    product_subtype: str,
+    eq_name: str,
+    eq_data: dict[str, Any],
+) -> Path:
+    vendor_slug = slugify(vendor_name)
+    product_slug = slugify(product_name)
+    eq_slug = slugify(eq_name)
+
+    vendor_dir = VENDORS_DIR / vendor_slug
+    product_dir = vendor_dir / "products" / product_slug
+    eq_dir = product_dir / "eq" / eq_slug
+
+    vendor_info = vendor_dir / "info.json"
+    if not vendor_info.exists():
+        write_json(vendor_info, {"name": vendor_name})
+
+    product_info = product_dir / "info.json"
+    if not product_info.exists():
+        write_json(
+            product_info,
+            {
+                "name": product_name,
+                "type": "headphones",
+                "subtype": product_subtype,
+            },
+        )
+
+    write_json(eq_dir / "info.json", eq_data)
+    return eq_dir / "info.json"
+
+
+def import_hangout_url(url: str) -> None:
+    for directory in (VENDORS_DIR, DIST_DIR):
+        directory.mkdir(parents=True, exist_ok=True)
+
+    imported = parse_hangout_url(url)
+    path = write_eq(
+        imported["vendor_name"],
+        imported["product_name"],
+        imported["product_subtype"],
+        imported["eq_name"],
+        imported["eq_data"],
+    )
+    print(f"Imported Hangout URL -> {path.relative_to(ROOT)}")
 
 
 def convert_inbox() -> None:
@@ -282,7 +465,21 @@ def build_dist() -> None:
 
 
 def main() -> None:
-    convert_inbox()
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--hangout-url",
+        action="append",
+        default=[],
+        help="Import a shared graph.hangout.audio EQ URL directly into the OPRA database.",
+    )
+    args = parser.parse_args()
+
+    if args.hangout_url:
+        for url in args.hangout_url:
+            import_hangout_url(url)
+    else:
+        convert_inbox()
+
     build_dist()
 
 

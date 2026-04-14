@@ -56,6 +56,18 @@ Examples:
 
 If the format can't be parsed, `convert.py` will ask for the vendor, product, EQ name, and subtype instead of guessing.
 
+## Hangout.audio URL Import
+
+Hangout shared graph URLs already contain the EQ data: `P` is preamp, `T/F/Q/G` are the filter type, frequency, Q, and gain values, `selphone` is the product, and `share` contains the target/source curve labels.
+
+Import one directly:
+
+```bash
+python3 convert.py --hangout-url '<full https://graph.hangout.audio/... URL>'
+```
+
+The importer writes the OPRA JSON under `database/vendors/`, links back to the Hangout URL, and rebuilds `dist/database_v1.jsonl`. For `/iem/` URLs, new products are created as `in_ear`. URL imports do not process `inbox/`; run plain `python3 convert.py` when you want to convert inbox files.
+
 ## Roon Setup
 
 In Roon:
