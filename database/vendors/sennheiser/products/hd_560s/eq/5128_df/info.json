@@ -1,0 +1,65 @@
+{
+  "author": "Archive",
+  "details": "Archive - 5128 DF - 9 Bands",
+  "link": "https://github.com/benwmerritt/custom-eq",
+  "type": "parametric_eq",
+  "parameters": {
+    "gain_db": -11.8,
+    "bands": [
+      {
+        "type": "peak_dip",
+        "frequency": 20,
+        "gain_db": 2.2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 41,
+        "gain_db": -1,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 110,
+        "gain_db": -2,
+        "q": 0.7
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 1200,
+        "gain_db": -1.2,
+        "q": 1.4
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 3500,
+        "gain_db": 2.8,
+        "q": 1.8
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 4200,
+        "gain_db": -3.2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 7500,
+        "gain_db": 3.2,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 10000,
+        "gain_db": -4.5,
+        "q": 2
+      },
+      {
+        "type": "peak_dip",
+        "frequency": 17000,
+        "gain_db": 12,
+        "q": 0.9
+      }
+    ]
+  }
+}

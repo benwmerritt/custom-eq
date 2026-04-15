@@ -70,7 +70,7 @@ KNOWN_PRODUCTS = [
         "subtype": "in_ear",
     },
     {
-        "aliases": ["Sennheiser HD 560S", "Uploaded Sennheiser HD 560S"],
+        "aliases": ["Sennheiser HD 560S", "Sennheiser HD560S", "Uploaded Sennheiser HD 560S"],
         "vendor": "Sennheiser",
         "product": "HD 560S",
         "subtype": "over_the_ear",
