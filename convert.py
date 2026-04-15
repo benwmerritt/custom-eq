@@ -397,6 +397,12 @@ def first_query_value(query: dict[str, list[str]], key: str) -> str | None:
     return values[0] if values else None
 
 
+def target_context_matches_product(source_name: str, product_name: str) -> bool:
+    source_tokens = set(name_tokens(source_name))
+    product_tokens = set(name_tokens(product_name))
+    return bool(source_tokens & product_tokens)
+
+
 def parse_hangout_url(url: str) -> dict[str, Any]:
     parsed = urlparse(url)
     query = parse_qs(parsed.query, keep_blank_values=True)
@@ -456,12 +462,15 @@ def parse_hangout_url(url: str) -> dict[str, Any]:
     target_for_name = re.sub(r"\s+Target$", "", target_name, flags=re.I)
     setting_name = " ".join(f"{key} {signed_words(value)}" for key, value in settings)
     eq_name = " ".join(part for part in (rig_label, target_for_name, setting_name) if part)
-    details = f"{rig_label} - {target_name} - {source_name}"
+    vendor_name, product_name = parse_hangout_product(raw_product)
+
+    details_parts = [rig_label, target_name]
+    if target_context_matches_product(source_name, product_name):
+        details_parts.append(source_name)
+    details = " - ".join(details_parts)
     if settings:
         details += " - " + " / ".join(f"{key} {value}" for key, value in settings)
     details = ensure_band_count(details, len(bands))
-
-    vendor_name, product_name = parse_hangout_product(raw_product)
 
     subtype = product_subtype_for(vendor_name, product_name, hangout_subtype(parsed.path))
 

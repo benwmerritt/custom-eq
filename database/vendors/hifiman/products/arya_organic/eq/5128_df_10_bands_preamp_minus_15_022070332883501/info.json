@@ -1,6 +1,6 @@
 {
   "author": "hangout.audio",
-  "details": "Hangout - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0 - preamp -15.022070332883501 - 10 Bands",
+  "details": "Hangout - B&K 5128 - Diffuse Field Target - bass 0 / tilt 0 / treble 0 / ear 0 - preamp -15.022070332883501 - 10 Bands",
   "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=-15.022070332883501&selphone=Uploaded_HIFIMAN_Arya_Organic&T1=PK&F1=21&Q1=1.2&G1=-2.4&T2=PK&F2=54&Q2=1.6&G2=1.4&T3=PK&F3=60&Q3=0.5&G3=-6.6&T4=PK&F4=130&Q4=2&G4=-1.5&T5=PK&F5=400&Q5=1&G5=-2.2&T6=PK&F6=1900&Q6=1.8&G6=4.3&T7=PK&F7=7000&Q7=1.4&G7=-2.9&T8=PK&F8=9500&Q8=2&G8=10.1&T9=PK&F9=12000&Q9=2&G9=-10.8&T10=PK&F10=13000&Q10=0.8&G10=5.3",
   "type": "parametric_eq",
   "parameters": {

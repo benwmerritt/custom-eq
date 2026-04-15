@@ -1,6 +1,6 @@
 {
   "author": "hangout.audio",
-  "details": "Hangout - B&K 5128 - Diffuse Field Target - Mega7 Balance - bass 0 / tilt 0 / treble 0 / ear 0 - 10 Bands",
+  "details": "Hangout - B&K 5128 - Diffuse Field Target - bass 0 / tilt 0 / treble 0 / ear 0 - 10 Bands",
   "link": "https://graph.hangout.audio/iem/5128/?share=Diffuse_Field_Target,Mega7_Balance&bass=0&tilt=0&treble=0&ear=0&P=-18.081220427789223&selphone=Uploaded_Apple_AirPods_2&T1=PK&F1=20&Q1=2&G1=8.8&T2=PK&F2=28&Q2=0.7&G2=11.9&T3=PK&F3=110&Q3=0.7&G3=-3.5&T4=PK&F4=670&Q4=0.7&G4=2.1&T5=PK&F5=1800&Q5=1.5&G5=-5.4&T6=PK&F6=2400&Q6=2&G6=-2&T7=PK&F7=3400&Q7=2&G7=3.8&T8=PK&F8=5500&Q8=2&G8=-1.6&T9=PK&F9=8700&Q9=2&G9=-7.7&T10=PK&F10=13000&Q10=0.5&G10=11",
   "type": "parametric_eq",
   "parameters": {
